@@ -21,7 +21,7 @@ const main = async () => {
   const app = express();
 
   let RedisStore = connectRedis(session);
-  let redisClient = redis.createClient({ host: "10.0.0.6" });
+  let redisClient = redis.createClient({ host: "10.0.0.20" });
   app.use(
     cors({
       origin: "http://localhost:3000",
