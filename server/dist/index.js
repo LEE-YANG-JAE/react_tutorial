@@ -31,40 +31,41 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     yield orm.getMigrator().up();
     const app = express_1.default();
     let RedisStore = connect_redis_1.default(express_session_1.default);
-    let redisClient = redis_1.default.createClient();
+    let redisClient = redis_1.default.createClient({ host: "10.0.0.6" });
     app.use(cors_1.default({
-        origin: 'http://localhost:3000',
-        credentials: true
+        origin: "http://localhost:3000",
+        credentials: true,
     }));
+    console.log();
     app.use(express_session_1.default({
-        name: 'qid',
+        name: "qid",
         store: new RedisStore({
             client: redisClient,
-            disableTouch: true
+            disableTouch: true,
         }),
         cookie: {
             maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
             httpOnly: true,
-            sameSite: 'lax',
-            secure: constraints_1.__prod__
+            sameSite: "lax",
+            secure: constraints_1.__prod__,
         },
         saveUninitialized: false,
-        secret: 'xvczafsdfsadfasdfzxcvaefasdfsadfzd',
-        resave: false
+        secret: "xvczafsdfsadfasdfzxcvaefasdfsadfzd",
+        resave: false,
     }));
     const apolloServer = new apollo_server_express_1.ApolloServer({
         schema: yield type_graphql_1.buildSchema({
             resolvers: [hello_1.HelloResolver, post_1.PostResolver, user_1.UserResolver],
-            validate: false
+            validate: false,
         }),
-        context: ({ req, res }) => ({ em: orm.em, req, res })
+        context: ({ req, res }) => ({ em: orm.em, req, res }),
     });
     apolloServer.applyMiddleware({
         app,
-        cors: false
+        cors: false,
     });
     app.listen(4000, () => {
-        console.log('server started on localhost:4000');
+        console.log("server started on localhost:4000");
     });
 });
 main().catch((err) => {
