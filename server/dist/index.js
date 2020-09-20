@@ -31,12 +31,11 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     yield orm.getMigrator().up();
     const app = express_1.default();
     let RedisStore = connect_redis_1.default(express_session_1.default);
-    let redisClient = redis_1.default.createClient({ host: "10.0.0.20" });
+    let redisClient = redis_1.default.createClient({ host: "10.0.0.15" });
     app.use(cors_1.default({
         origin: "http://localhost:3000",
         credentials: true,
     }));
-    console.log();
     app.use(express_session_1.default({
         name: "qid",
         store: new RedisStore({

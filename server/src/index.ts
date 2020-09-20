@@ -21,14 +21,13 @@ const main = async () => {
   const app = express();
 
   let RedisStore = connectRedis(session);
-  let redisClient = redis.createClient({ host: "10.0.0.20" });
+  let redisClient = redis.createClient({ host: "10.0.0.15" });
   app.use(
     cors({
       origin: "http://localhost:3000",
       credentials: true,
     })
   );
-  console.log();
   app.use(
     session({
       name: "qid",
